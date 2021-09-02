@@ -1,0 +1,28 @@
+{% extends "Grateful_Episode/base.html" %}
+{% block content %}
+
+<div>
+    <p>あなたが寄せてくれたエピソード{{episode_count}}件</p>
+    <p>あなたが💛を送ったエピソード{{user.grateful_to_count}}件</p>
+    <p>あなたに💛が送られたエピソード{{user.be_grateful_count}}件</p>
+</div>
+
+<div>
+    {% for episode in my_episode reversed %}
+    {% if episode.public %}
+    <div style="border: 3px double; padding: 15px 15px 0px 15px;">
+        <section id='tweet{{forloop.revcounter0 }}'>
+            <p> 投稿者：@{{ episode.contributor }}</p>
+            <div class="episode_box">
+                <span class="box-title">エピソード</span>
+                <p>{{ episode.episode }}</p>
+            </div>
+            <p> 投稿日時：{{episode.contribute_date|date:"Y年m月d日" }}　👍：{{ episode.be_grateful_count }}</p>
+        </section>
+    </div> 
+    <br>
+    {% endif %}
+    {% endfor %}
+</div>
+{% include 'Grateful_Episode/pagination.html' %}
+{% endblock%}

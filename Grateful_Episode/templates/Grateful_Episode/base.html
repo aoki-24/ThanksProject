@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} Thanks Project</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="/static/Grateful_Episode/content/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/static/Grateful_Episode/content/site.css">
+    <link rel="stylesheet" type="text/css" href="/static/Grateful_Episode/content/style.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'Grateful_Episode/css/add.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'Grateful_Episode/css/add2.css'%}">
+    <script src="/static/Grateful_Episode/js/intersection-observer.js"></script>
+    <script src="/static/Grateful_Episode/scripts/modernizr-2.6.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: rgb(252, 200, 252); border-color: violet;">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" style="padding: 15px; border-color: violet;">
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/" class="navbar-brand">Home</a>
+            </div>
+            <form id="logoutForm" action="/logout/" method="post" class="navbar-right">{% csrf_token %}
+            <div class="navbar-collapse collapse" style="border-color: violet;">
+                <ul class="nav navbar-nav navbar-right">
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'Grateful_User:mypage' %}">寄せられたエピソード</a></li>
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()">ログアウト</a></li>
+                        {% else %}
+                            <li><a href="{% url 'social:begin' 'twitter' %}">Twitterでログイン</a></li>
+                        {% endif %}
+                </ul>
+            </div>
+        </form>
+        </div>
+    </div>
+    <div class="bubble-background">
+    <div class="container body-content">
+        {% block content %}{% endblock %}
+        <hr/>
+        <footer>
+            <p>&copy; {{ year }} - Thanks Project</p>
+        </footer>
+    </div>
+    </div>
+{% block scripts %}
+<script src="/static/Grateful_Episode/scripts/bootstrap.js"></script>
+<script src="/static/Grateful_Episode/js/balloon.js"></script>
+<script src="/static/Grateful_Episode/js/thank_you.js"></script>
+<script src="/static/Grateful_Episode/scripts/respond.js"></script>
+{% endblock %}
+</body>

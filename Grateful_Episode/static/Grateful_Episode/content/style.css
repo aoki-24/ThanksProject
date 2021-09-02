@@ -1,0 +1,22 @@
+<style type="text/css" >
+.button1 {
+    display: inline-block;
+    font-size: 18pt; /* �����T�C�Y */
+    text-align: center; /* �����ʒu   */
+    cursor: pointer; /* �J�[�\��   */
+    padding: 13px 23px; /* �]��       */
+    background: #000000; /* �w�i�F     */
+    color: #ffffff; /* �����F     */
+    line-height: 1em; /* 1�s�̍���  */
+    transition: .3s; /* �Ȃ߂炩�ω� */
+    box-shadow: 6px 6px 3px #666666; /* �e�̐ݒ� */
+    border: 2px solid #000066; /* �g�̎w�� */
+}
+
+.button:hover {
+    box-shadow: none; /* �J�[�\�����̉e���� */
+    color: #000000; /* �w�i�F     */
+    background: #1a1aff; /* �����F     */
+}
+
+</style >

@@ -1,0 +1,75 @@
+{% extends "Grateful_Episode/base.html" %}
+{% block content %}
+{% load mathfilters %}
+    <br>
+    <form name="post_episode" action="{% url 'Grateful_Episode:home' %}" method="POST">
+        {% csrf_token %}
+        <div name="div_textarea" style="text-align: center;">
+            {% if  user.is_authenticated %}
+                <input class="input" type="hidden" name="contributor" value="{{ user.thanks_id }}"><br>
+            {% else %}
+                <input class="input" type="hidden" name="contributor" value="noname"><br>
+            {% endif %}
+            <textarea class="input_episode" name="episode" cols="100" rows="10"  style="border: 3px double;" required minlength=5 placeholder="あなたのエピソードを教えてください"></textarea>
+            <br>
+            <button type="submit" class="send"> 
+                <div class="text">送信</div>
+                <div class="loader"></div>
+                <div class="done">SUCCESS</div>
+                <div class="failed">FAIELD</div>        
+            </button>
+        </div>
+    </form>
+    <br>
+    <br>
+    <p></p>
+ 
+    {% for episode in episode_list %}
+    {% if episode.public %}
+        <div style="border: 3px double; padding: 15px 15px 0px 15px; background-color:whitesmoke;">
+            <section id='tweet{{ episode_count|sub:forloop.counter0}}' >
+                <p> 投稿者：@{{episode.contributor}}</p>
+                <div class="episode_box">
+                    <span class="box-title">エピソード</span>
+                    <p>{{ episode.episode }}</p>
+                </div>
+                <div class="Likes">
+                <p> 投稿日時：{{episode.contribute_date|date:"Y年m月d日" }}
+                    <input type="submit" class="thank_you_input" id="{{ episode_count|sub:forloop.counter0}}" value="" style="border: none;">
+                    　　：<span id="be_grateful_count_id_{{ episode_count|sub:forloop.counter0}}">{{ episode.be_grateful_count }}</span>
+                </p>
+                </div>
+                {#<div class="thank_you_input" id="{{ episode_count|sub:forloop.counter0}}"></div>#}
+            </section>
+        </div>
+    <br>
+    {% endif %}
+    {% endfor %}
+    {% include 'Grateful_Episode/pagination.html' %}
+    <script>
+        $(function(){
+            var token = '{{csrf_token}}';
+            $('.thank_you_input').on('click',function(){
+                be_grateful_count_id = $(this).attr('id')
+                elem=document.getElementById(be_grateful_count_id)
+                elem.disable=true
+                $.ajax({
+                    url: "{% url 'Grateful_Episode:home' %}",
+                    type: "POST", 
+                    headers: { "X-CSRFToken": token },
+                    data: {be_grateful_count : be_grateful_count_id,
+                    },
+                    success:(function(data) {
+                        $("#be_grateful_count_id_"+be_grateful_count_id).html(data)
+                    }),
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                        console.log("ajax通信に失敗しました");
+                        console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+                        console.log("textStatus     : " + textStatus);
+                        console.log("errorThrown    : " + errorThrown.message);    
+                    },
+                })
+            });
+        });
+    </script>
+{% endblock %}　
