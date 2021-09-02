@@ -2,7 +2,7 @@
 感謝の言葉やエピソードを投稿するサイト
 
 ## 作品URL
-https://thxproject.herokuapp.com
+https://thanks-project.herokuapp.com/
 
 ## サイトの概要
 1. テキストエリアに「感謝の言葉・エピソード」を入力・投稿する。(5文字以上)
