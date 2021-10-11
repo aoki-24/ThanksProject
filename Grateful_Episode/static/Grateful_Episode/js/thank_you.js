@@ -13,7 +13,7 @@ $('form').submit(function() {
     $(".loader").addClass("active");
     $(".send").delay(1700).queue(function(){
           $(this).addClass("finished").clearQueue();
-      });
+    });
     if($('.input_episode').val().length>=5){
       $(".done").delay(1600).queue(function(){
         $(this).addClass("active").clearQueue();
@@ -24,6 +24,16 @@ $('form').submit(function() {
         $(this).addClass("active").clearQueue();
       });
     }
+    setTimeout( function() {
+      $(".done").removeClass("active");
+      $(".loader").removeClass("active");
+      $(".failed").removeClass("active");
+      $(".send").removeClass("finished");
+      $(".send").removeClass("done");
+      $(".send").removeClass("loader");
+      $(".send").removeClass("active");
+      $(".text").removeClass("active");
+    }, 3000);
   })
 
   $('.thank_you_input').on('click', function() {
